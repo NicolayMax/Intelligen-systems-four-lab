@@ -13,10 +13,12 @@ public class Main extends Application {
 
     private GameEngine game;
     private HashSet<KeyCode> keySet;
+    private HashSet<KeyCode> prevKeys;
 
     // Init resources here
     public void startGame() {
         keySet = new HashSet<>();
+        prevKeys = new HashSet<>();
         game = new GameEngine();
         game.init();
     }
@@ -42,8 +44,9 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 if (game.isRunning()) {
-                    game.handleInput(keySet);
-                    game.render();
+                    game.handleInput(keySet, prevKeys);
+                    prevKeys.clear();
+                    prevKeys.addAll(keySet);
                 } else {
                     // Exit game
                     primaryStage.close();

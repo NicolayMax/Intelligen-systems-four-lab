@@ -20,8 +20,9 @@ public class GameEngine {
     private Pane root;
     private List<GameObject> gameObjects;
     private LevelMap levelMap;
-    // example
-    private GameObject car = new Car(64,64);
+    private HashSet<KeyCode> prevKeys = new HashSet<>();
+
+    Car car;
 
     public GameEngine() {
         root = new Pane();
@@ -31,8 +32,15 @@ public class GameEngine {
         levelMap.drawTiles(root);
 
         // example
-        car.setRotate(-90.0);
+        car = new Car(1,0, Car.Direction.DOWN, levelMap);
+        Car secondCar = new Car(2,2, Car.Direction.LEFT, levelMap);
+        Car thirdCar = new Car(5,2, Car.Direction.RIGHT, levelMap);
+        levelMap.placeCar(car);
+        levelMap.placeCar(secondCar);
+        levelMap.placeCar(thirdCar);
         root.getChildren().add(car);
+        root.getChildren().add(secondCar);
+        root.getChildren().add(thirdCar);
     }
 
     public void init() {
@@ -40,18 +48,19 @@ public class GameEngine {
         System.out.println("Init game objects");
     }
 
-    public void handleInput(HashSet<KeyCode> keySet) {
+    public void handleInput(HashSet<KeyCode> keySet, HashSet<KeyCode> prevKeys) {
         if (keySet.contains(KeyCode.ESCAPE)) {
             cleanup();
             running = false;
         }
-        if (keySet.contains(KeyCode.UP)) {
-            // example
-            car.setTranslateX(car.getTranslateX() + 2);
+        if (keySet.contains(KeyCode.UP) && !prevKeys.contains(KeyCode.UP)) {
+            car.move();
         }
-        if (keySet.contains(KeyCode.DOWN)) {
-            // example
-            car.setTranslateX(car.getTranslateX() - 2);
+        if (keySet.contains(KeyCode.LEFT) && !prevKeys.contains(KeyCode.LEFT)) {
+            car.rotateLeft();
+        }
+        if (keySet.contains(KeyCode.RIGHT) && !prevKeys.contains(KeyCode.RIGHT)) {
+            car.rotateRight();
         }
     }
 
