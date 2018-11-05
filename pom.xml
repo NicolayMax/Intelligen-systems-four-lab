@@ -13,5 +13,11 @@
     <artifactId>aicarssuperracing</artifactId>
     <version>0.1-SNAPSHOT</version>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.github.alexheretic</groupId>
+            <artifactId>dynamics</artifactId>
+            <version>4.0</version>
+        </dependency>
+    </dependencies>
 </project>

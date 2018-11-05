@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import ru.bestcoders.aicarsuperracing.ai.AIEngine;
 import ru.bestcoders.aicarsuperracing.engine.GameEngine;
 
 import java.util.HashSet;
@@ -14,6 +15,7 @@ public class Main extends Application {
     private GameEngine game;
     private HashSet<KeyCode> keySet;
     private HashSet<KeyCode> prevKeys;
+    private AIEngine aie;
 
     // Init resources here
     public void startGame() {
@@ -23,8 +25,14 @@ public class Main extends Application {
         game.init();
     }
 
+    public void loadAI(){
+        aie = new AIEngine();
+        aie.init();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        loadAI();
         startGame();
 
         primaryStage.setTitle("Ai Super Racing Game 4000");
