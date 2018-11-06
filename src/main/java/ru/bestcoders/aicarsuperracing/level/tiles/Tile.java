@@ -21,6 +21,7 @@ public class Tile extends Pane {
         ENDBOTTOM,
         ENDLEFT,
         ENDRIGHT,
+        CHECKPOINT,
     }
 
     private final Image texture = new Image(getClass().getResourceAsStream("/textures/4bit_road_tiles.png"));
@@ -31,10 +32,6 @@ public class Tile extends Pane {
 
     public Tile (TileType type,int x, int y) {
         block = new ImageView(texture);
-        block.setFitHeight(64);
-        block.setFitWidth(64);
-        setTranslateX(x);
-        setTranslateY(y);
 
         switch (type) {
             case CROSS:
@@ -85,7 +82,17 @@ public class Tile extends Pane {
                 block.setViewport(new Rectangle2D(64 * 3, 64 * 2, 64, 64));
                 road = true;
                 break;
+            case CHECKPOINT:
+                block = new ImageView(new Image(getClass().getResourceAsStream("/textures/checkpoint.png")));
+                block.setViewport(new Rectangle2D(0, 0, 64, 64));
+                road = true;
+                break;
         }
+
+        block.setFitHeight(64);
+        block.setFitWidth(64);
+        setTranslateX(x);
+        setTranslateY(y);
 
         getChildren().add(block);
     }

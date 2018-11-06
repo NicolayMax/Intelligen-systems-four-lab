@@ -1,5 +1,8 @@
 package ru.bestcoders.aicarsuperracing.level;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import ru.bestcoders.aicarsuperracing.entities.Car;
 import ru.bestcoders.aicarsuperracing.level.tiles.Tile;
@@ -89,6 +92,20 @@ public class LevelMap {
 
     public void drawTiles(Pane pane) {
         pane.getChildren().addAll(tiles);
+    }
+
+    public void drawCheckpoints(Pane pane) {
+        ArrayList<Tile> points = new ArrayList<>();
+
+        for (int i = 0; i < mapForBreakingPoints.length; i++) {
+            for (int j = 0; j < mapForBreakingPoints[i].length; j++) {
+                if (mapForBreakingPoints[i][j] > 0) {
+                    points.add(new Tile(Tile.TileType.CHECKPOINT, 64 * j, 64 * i));
+                }
+            }
+        }
+
+        pane.getChildren().addAll(points);
     }
 
     public void placeCar(Car car) {

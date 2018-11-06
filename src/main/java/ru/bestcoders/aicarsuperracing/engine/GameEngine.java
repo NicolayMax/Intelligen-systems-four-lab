@@ -32,6 +32,7 @@ public class GameEngine {
         root = new Pane();
         levelMap = new LevelMap();
         levelMap.drawTiles(root);
+        levelMap.drawCheckpoints(root);
         WIDTH = levelMap.map[0].length*64;
         HEIGHT = levelMap.map.length*64;
 
@@ -77,10 +78,6 @@ public class GameEngine {
         if (keySet.contains(KeyCode.RIGHT) && !prevKeys.contains(KeyCode.RIGHT)) {
             car.rotateRight();
         }
-    }
-
-    public void render() {
-        // Render objects
     }
 
     public void cleanup() {
