@@ -21,18 +21,13 @@ public class Main extends Application {
     public void startGame() {
         keySet = new HashSet<>();
         prevKeys = new HashSet<>();
+
         game = new GameEngine();
         game.init();
     }
 
-    public void loadAI(){
-        aie = new AIEngine();
-        aie.init();
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        loadAI();
         startGame();
 
         primaryStage.setTitle("Ai Super Racing Game 4000");

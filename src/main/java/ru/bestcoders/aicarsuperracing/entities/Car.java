@@ -144,11 +144,12 @@ public class Car extends GameObject {
         }
     }
 
-    private void recalculateTranslation() {
+    public void recalculateTranslation() {
         //temp
         int blockWidth = 64;
         setTranslateX(blockWidth * posX);
         setTranslateY(blockWidth * posY);
+        System.out.println("recalcTranslation: "+blockWidth * posX+" "+blockWidth * posY);
     }
 
     private void recalculateRotation() {
