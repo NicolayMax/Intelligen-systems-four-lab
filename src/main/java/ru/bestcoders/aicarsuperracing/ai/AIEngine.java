@@ -20,7 +20,7 @@ public class AIEngine {
         s.loadRoutes();
     }
 
-    public void play(Pane root, Car...cars) {
+    public void play(Car...cars) {
         /*while (!end){
             for (Car instanceOfCar : cars){
                 if (levelMap.map[instanceOfCar.getPosY()][instanceOfCar.getPosX()]!=1) {

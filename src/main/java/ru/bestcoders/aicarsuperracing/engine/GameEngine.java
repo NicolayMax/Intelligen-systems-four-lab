@@ -66,7 +66,7 @@ public class GameEngine {
         }
         if (keySet.contains(KeyCode.ENTER)) {
             aie.init();
-            aie.play(root, secondCar, thirdCar);
+            aie.play(secondCar, thirdCar);
         }
         if (keySet.contains(KeyCode.UP) && !prevKeys.contains(KeyCode.UP)) {
             car.move();

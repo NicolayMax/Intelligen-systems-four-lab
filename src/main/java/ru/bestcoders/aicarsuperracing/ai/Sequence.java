@@ -20,12 +20,12 @@ public class Sequence {
         parser = new XMLRouteParser(n);
         parser.parse("./src/main/resources/xml/alg1.xml");
         seq1 = parser.getResults();
-        //System.out.println(Arrays.toString(seq1.toArray()));
+        System.out.println(Arrays.toString(seq1.toArray()));
 
         parser = new XMLRouteParser(n);
         parser.parse("./src/main/resources/xml/alg2.xml");
         seq2 = parser.getResults();
-        //System.out.println(Arrays.toString(seq2.toArray()));
+        System.out.println(Arrays.toString(seq2.toArray()));
     }
 
     public ArrayList<Integer>getSeq(int i){
