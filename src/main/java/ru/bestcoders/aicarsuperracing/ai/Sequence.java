@@ -28,11 +28,16 @@ public class Sequence {
         //System.out.println(Arrays.toString(seq2.toArray()));
     }
 
-    public ArrayList<Integer>getSeq1(){
-        return seq1;
+    public ArrayList<Integer>getSeq(int i){
+        if (i == 0) {
+            return seq1;
+        }
+        else {
+            return seq2;
+        }
     }
 
-    public ArrayList<Integer>getSeq2(){
-        return seq2;
+    public int getN(){
+        return n;
     }
 }

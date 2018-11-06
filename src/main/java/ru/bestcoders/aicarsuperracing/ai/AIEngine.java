@@ -40,7 +40,7 @@ public class AIEngine {
         t = new Thread[cars.length];
 
         for (int i=0;i<cars.length;i++) {
-            ct[i] = new CarThread(cars[i], levelMap);
+            ct[i] = new CarThread(cars[i], levelMap, s.getSeq(i));
         }
         for (int i=0;i<cars.length;i++) {
             t[i]= new Thread(ct[i]);
