@@ -21,21 +21,6 @@ public class AIEngine {
     }
 
     public void play(Car...cars) {
-        /*while (!end){
-            for (Car instanceOfCar : cars){
-                if (levelMap.map[instanceOfCar.getPosY()][instanceOfCar.getPosX()]!=1) {
-                    instanceOfCar.move();
-                    //instanceOfCar.setLayoutX(instanceOfCar.getLayoutX() + 10);
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {}
-                }
-                else {
-                    end=true;
-                }
-            }
-        }*/
         ct = new CarThread[cars.length];
         t = new Thread[cars.length];
 

@@ -89,52 +89,10 @@ public class CarThread implements Runnable{
                         makeStep();
                     }
                 }
-
-                /*
-                else {
-                    for (int i = 0; i < levelMap.mapForBreakingPoints.length; i++) {
-                        for (int j = 0; j < levelMap.mapForBreakingPoints[i].length; j++) {
-                            if (levelMap.mapForBreakingPoints[i][j] == nextPoint) {
-                                nextX = j;
-                                nextY = i;
-                            }
-                        }
-                    }
-                    //
-
-
-                }*/
             }
             else {
                 end = true;
             }
-
-            /*if (levelMap.map[car.getPosY()][car.getPosX()]!=1) {
-                makeStep();
-            }
-            else {
-                if (counterOfBreakingPoints<breakingPoints.size()) {
-                    nextPoint = breakingPoints.get(counterOfBreakingPoints);
-
-                    for (int i = 0; i < levelMap.mapForBreakingPoints.length; i++) {
-                        for (int j = 0; j < levelMap.mapForBreakingPoints[i].length; j++) {
-                            if (levelMap.mapForBreakingPoints[i][j] == nextPoint) {
-                                nextX = j;
-                                nextY = i;
-                            }
-                        }
-                    }
-                    counterOfBreakingPoints++;
-                    System.out.println("Current point:" + "X = "+car.getPosY()+", Y = "+car.getPosX());
-                    System.out.println("Next point = " + nextPoint+", nextX = "+nextX+", nextY = "+nextY);
-
-
-                    makeStep();
-                }
-                else{
-                    end = true;
-                }
-            }*/
         }
     }
 
@@ -158,18 +116,4 @@ public class CarThread implements Runnable{
             Thread.sleep(1000);
         } catch (InterruptedException e) {}
     }
-
-    /*public static int getFirst(int[][] arr) {
-        if (arr.length == 0)
-            throw new IllegalArgumentException(); // пустой массив, кидаем исключение
-        // случай для всех пустых вложенных массивов не рассматриваю.
-        int result = Integer.MIN_VALUE;
-
-        for (int[] i : arr) {
-            for (int j : i)
-                result = Math.max(result, j);
-        }
-
-        return result;
-    }*/
 }
