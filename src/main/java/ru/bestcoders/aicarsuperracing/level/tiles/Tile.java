@@ -117,6 +117,16 @@ public class Tile extends Pane {
         }
     }
 
+    public void holdAll() {
+        busyBL = true;
+        busyUR = true;
+    }
+
+    public void releaseAll() {
+        busyBL = false;
+        busyUR = false;
+    }
+
     public void changeDirection(Car.Direction direction) throws Exception {
         if (direction.equals(Car.Direction.DOWN) || direction.equals(Car.Direction.LEFT)) {
             if (!busyBL) {
