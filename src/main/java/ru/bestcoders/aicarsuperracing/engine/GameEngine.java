@@ -12,6 +12,7 @@ import ru.bestcoders.aicarsuperracing.level.LevelMap;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class GameEngine {
 
@@ -53,7 +54,6 @@ public class GameEngine {
         root.getChildren().add(thirdCar);
 
         aie = new AIEngine(levelMap);
-
     }
 
     public void init() {
