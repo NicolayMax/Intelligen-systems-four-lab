@@ -1,10 +1,8 @@
 package ru.bestcoders.aicarsuperracing.level;
 
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import ru.bestcoders.aicarsuperracing.entities.Car;
+import ru.bestcoders.aicarsuperracing.entities.GameObject;
 import ru.bestcoders.aicarsuperracing.level.tiles.Tile;
 
 import java.util.ArrayList;
@@ -36,6 +34,14 @@ public class LevelMap {
         {0, 0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
         {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
+    private int[][] objectMap = {{0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     public LevelMap() {
         tiles = new ArrayList<>();
         mapWidth = map[0].length;
@@ -150,5 +156,18 @@ public class LevelMap {
                 System.out.println("Busy to top or right on " + i);
             }
         }
+    }
+
+    public boolean setGameObject(GameObject object) {
+        if (objectMap[object.getPosY()][object.getPosX()] == 0) {
+            objectMap[object.getPosY()][object.getPosX()] = 1;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void removeGameObject(int posX, int posY) {
+        objectMap[posY][posX] = 0;
     }
 }

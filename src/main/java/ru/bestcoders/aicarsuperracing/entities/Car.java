@@ -17,9 +17,6 @@ public class Car extends GameObject {
     private final Image texture = new Image(getClass().getResourceAsStream("/textures/Car_Green_Front.png"));
     private ImageView carOverlay;
     private LevelMap map;
-
-    int posX;
-    int posY;
     Direction direction;
 
     public Car(int posX, int posY, Direction direction, LevelMap map) {

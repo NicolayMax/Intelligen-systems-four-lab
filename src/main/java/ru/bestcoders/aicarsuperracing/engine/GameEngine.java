@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import ru.bestcoders.aicarsuperracing.ai.AIEngine;
 import ru.bestcoders.aicarsuperracing.entities.Car;
+import ru.bestcoders.aicarsuperracing.entities.Construction;
 import ru.bestcoders.aicarsuperracing.entities.GameObject;
 import ru.bestcoders.aicarsuperracing.level.LevelMap;
 
@@ -90,5 +91,22 @@ public class GameEngine {
 
     public boolean isRunning() {
         return running;
+    }
+
+    public void mouseClick(int sceneX, int sceneY) {
+        sceneX /= 64;
+        sceneY /= 64;
+        addObject(new Construction(sceneX, sceneY, levelMap));
+    }
+
+    public void addObject(GameObject object) {
+        if (levelMap.setGameObject(object)) {
+            gameObjects.add(object);
+            root.getChildren().add(object);
+        } else {
+            levelMap.removeGameObject(object.getPosX(), object.getPosY());
+            root.getChildren().remove(object);
+            gameObjects.remove(object);
+        }
     }
 }

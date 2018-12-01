@@ -43,6 +43,10 @@ public class Main extends Application {
             keySet.remove(event.getCode());
         });
 
+        primaryStage.getScene().setOnMouseClicked(event -> {
+            game.mouseClick((int)event.getSceneX(), (int)event.getSceneY());
+        });
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
