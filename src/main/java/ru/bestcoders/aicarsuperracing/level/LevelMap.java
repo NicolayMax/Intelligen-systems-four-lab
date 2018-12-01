@@ -161,6 +161,8 @@ public class LevelMap {
     public boolean setGameObject(GameObject object) {
         if (objectMap[object.getPosY()][object.getPosX()] == 0) {
             objectMap[object.getPosY()][object.getPosX()] = 1;
+            int tileIndex = object.getPosY() * mapWidth + object.getPosX();
+            tiles.get(tileIndex).holdAll();
             return true;
         } else {
             return false;
@@ -169,5 +171,7 @@ public class LevelMap {
 
     public void removeGameObject(int posX, int posY) {
         objectMap[posY][posX] = 0;
+        int tileIndex = posY * mapWidth + posX;
+        tiles.get(tileIndex).releaseAll();
     }
 }
