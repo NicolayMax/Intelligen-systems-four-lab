@@ -5,6 +5,7 @@ import ru.bestcoders.aicarsuperracing.entities.Car;
 import ru.bestcoders.aicarsuperracing.level.LevelMap;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class CarThread implements Runnable{
     private Car car;
@@ -32,6 +33,7 @@ public class CarThread implements Runnable{
     private int counterOfX;
     private int lastCrossCoorX;
     private int lastCrossCoorY;
+    private Logger l;
 
     private int memMove;
 
@@ -57,7 +59,7 @@ public class CarThread implements Runnable{
 
         counterOfX = 0;
         firstCrossPassed = false;
-
+        l = Logger.getLogger("main");
         ph = new PathHistory();
     }
     public void run(){
@@ -113,6 +115,7 @@ public class CarThread implements Runnable{
                         }
                     }
                     else{//если находимся на перекрестке
+                        l.info("\nПерекресток");
                         System.out.println("ПЕРЕКРЕСТОК!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         counterOfX++;
                         //-----------------------------------------------------------------------------------------------
@@ -211,8 +214,8 @@ public class CarThread implements Runnable{
                                     turnLeft();
                                     lastMove = 4;}
                                 else{
-                                    turnRight();
-                                    lastMove = 3;
+                                    turnLeft();
+                                    lastMove = 2;
                                 }
 
                             }
@@ -239,13 +242,13 @@ public class CarThread implements Runnable{
                             memMove = lastMove;
 
                             if (lastMove == 3){     //обход дерева в глубину
-                                if (forwardCounter == 0.5){
-                                    turnRight();
-                                    lastMove = 1;
+                                if (leftCounter == 0.5){
+                                    lastMove = 2;
                                     makeStep();
                                 }
-                                else if (leftCounter == 0.5){
-                                    lastMove = 2;
+                                else if (forwardCounter == 0.5){
+                                    turnRight();
+                                    lastMove = 1;
                                     makeStep();
                                 }
                                 else if (backwardsCounter == 0.5){
@@ -259,14 +262,14 @@ public class CarThread implements Runnable{
                                 }
                             }
                             else if (lastMove == 1){
-                                if (rightCounter == 0.5){
-                                    turnLeft();
-                                    lastMove = 3;
-                                    makeStep();
-                                }
-                                else if (leftCounter == 0.5){
+                                if (leftCounter == 0.5){
                                     turnRight();
                                     lastMove = 2;
+                                    makeStep();
+                                }
+                                else if (rightCounter == 0.5){
+                                    turnLeft();
+                                    lastMove = 3;
                                     makeStep();
                                 }
                                 else if (backwardsCounter == 0.5){
@@ -279,13 +282,13 @@ public class CarThread implements Runnable{
                                 }
                             }
                             else if (lastMove == 2){
-                                if (rightCounter == 0.5){
-                                    lastMove = 3;
-                                    makeStep();
-                                }
-                                else if (forwardCounter == 0.5){
+                                if (forwardCounter == 0.5){
                                     turnLeft();
                                     lastMove = 1;
+                                    makeStep();
+                                }
+                                else if (rightCounter == 0.5){
+                                    lastMove = 3;
                                     makeStep();
                                 }
                                 else if (backwardsCounter == 0.5){
@@ -299,9 +302,9 @@ public class CarThread implements Runnable{
                                 }
                             }
                             else if (lastMove == 4){
-                                if (rightCounter == 0.5){
-                                    turnRight();
-                                    lastMove = 3;
+                                if (leftCounter == 0.5){
+                                    turnLeft();
+                                    lastMove = 2;
                                     makeStep();
                                 }
                                 else if (forwardCounter == 0.5){
@@ -309,9 +312,9 @@ public class CarThread implements Runnable{
                                     lastMove = 1;
                                     makeStep();
                                 }
-                                else if (leftCounter == 0.5){
-                                    turnLeft();
-                                    lastMove = 2;
+                                else if (rightCounter == 0.5){
+                                    turnRight();
+                                    lastMove = 3;
                                     makeStep();
                                 }
                                 else {
@@ -329,6 +332,7 @@ public class CarThread implements Runnable{
                 end = true;
             }
         }
+        //saveXML
     }
 
     public void makeStep(){
