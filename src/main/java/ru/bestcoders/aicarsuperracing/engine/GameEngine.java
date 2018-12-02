@@ -43,7 +43,7 @@ public class GameEngine {
         // example
         car = new Car(1,0, Car.Direction.DOWN, levelMap);
         secondCar = new Car(19,2, Car.Direction.LEFT, levelMap);
-        thirdCar = new Car(5,6, Car.Direction.UP, levelMap);
+        thirdCar = new Car(5,10, Car.Direction.UP, levelMap);
 
         levelMap.placeCar(car);
         levelMap.placeCar(secondCar);
@@ -68,7 +68,7 @@ public class GameEngine {
         }
         if (keySet.contains(KeyCode.ENTER)) {
             aie.init();
-            aie.play(secondCar, thirdCar);
+            aie.play(/*secondCar,*/thirdCar);
         }
         if (keySet.contains(KeyCode.UP) && !prevKeys.contains(KeyCode.UP)) {
             car.move();

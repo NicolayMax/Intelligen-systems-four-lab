@@ -91,6 +91,38 @@ public class Car extends GameObject {
         }
     }
 
+    public boolean move2() {
+        int x = posX;
+        int y = posY;
+
+        switch (direction) {
+            case DOWN:
+                y++;
+                break;
+            case UP:
+                y--;
+                break;
+            case LEFT:
+                x--;
+                break;
+            case RIGHT:
+                x++;
+                break;
+        }
+
+        if (!map.isBusy( x, y, direction)) {
+            map.release(posX, posY, direction);
+            posY = y;
+            posX = x;
+            map.hold(posX, posY, direction);
+            recalculateTranslation();
+            return true;
+        } else {
+            System.out.println("Can't move!");
+            return false;
+        }
+    }
+
     public void rotateLeft() {
         try {
             switch (direction) {
