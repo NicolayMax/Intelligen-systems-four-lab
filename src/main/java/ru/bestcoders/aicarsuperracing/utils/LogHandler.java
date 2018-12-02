@@ -34,7 +34,7 @@ public class LogHandler extends Handler {
         }
 
         StringBuilder builder = new StringBuilder();
-        builder.append("[").append(record.getLevel()).append("] : ").append(record.getMessage());
+        builder.append("[").append(record.getLevel()).append("] : ").append(record.getMessage()).append("\n");
         String message = builder.toString();
         window.showInfo(message);
     }
