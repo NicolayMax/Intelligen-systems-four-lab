@@ -3,6 +3,7 @@ package ru.bestcoders.aicarsuperracing.ai;
 import ru.bestcoders.aicarsuperracing.ai.logpath.PathHistory;
 import ru.bestcoders.aicarsuperracing.entities.Car;
 import ru.bestcoders.aicarsuperracing.level.LevelMap;
+import ru.bestcoders.aicarsuperracing.utils.XMLSaver;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -333,6 +334,7 @@ public class CarThread implements Runnable{
             }
         }
         //saveXML
+        XMLSaver.saveToFile(ph.record, "algorithm.xml");
     }
 
     public void makeStep(){
