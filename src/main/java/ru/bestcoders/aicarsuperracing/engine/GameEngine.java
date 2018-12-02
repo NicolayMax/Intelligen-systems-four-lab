@@ -41,9 +41,9 @@ public class GameEngine {
         gameObjects = new ArrayList<>();
 
         // example
-        car = new Car(1,0, Car.Direction.DOWN, levelMap);
-        secondCar = new Car(19,2, Car.Direction.LEFT, levelMap);
-        thirdCar = new Car(5,10, Car.Direction.UP, levelMap);
+        car = new Car(2,0, Car.Direction.DOWN, levelMap);
+        secondCar = new Car(20,2, Car.Direction.LEFT, levelMap);
+        thirdCar = new Car(6,10, Car.Direction.UP, levelMap);
 
         levelMap.placeCar(car);
         levelMap.placeCar(secondCar);

@@ -189,7 +189,7 @@ public class CarThread implements Runnable{
                                 lastMove = 2;                           //влево
                             }
                             else if (
-                                    (((angle>=-180)&&(angle<-135))) || (((angle>=135)&&(angle<180)))
+                                    (((angle>=-180)&&(angle<-135))) || (((angle>=135)&&(angle<=180)))
                             )
                             {
                                 /*if(
