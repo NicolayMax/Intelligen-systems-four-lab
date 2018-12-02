@@ -10,7 +10,10 @@ import java.util.logging.Logger;
 
 public class CarThread implements Runnable{
     private Car car;
-    private boolean end;
+    private volatile boolean running;
+    private volatile boolean paused = false;
+    private final Object pauseLock = new Object();
+    //private boolean running;
     private LevelMap levelMap;
     private ArrayList<Integer> breakingPoints;
     private Integer counterOfBreakingPoints;
@@ -40,7 +43,7 @@ public class CarThread implements Runnable{
 
     public CarThread(Car car, LevelMap levelMap, ArrayList<Integer> breakingPoints){
         this.car = car;
-        end = false;
+        running = true;
         this.levelMap = levelMap;
         this.breakingPoints = breakingPoints;
         counterOfBreakingPoints = 0;
@@ -65,7 +68,29 @@ public class CarThread implements Runnable{
     }
     public void run(){
 
-        while (!end){
+        while (running){
+            synchronized (pauseLock) {
+                if (!running) { // may have changed while waiting to
+                    // synchronize on pauseLock
+                    break;
+                }
+                if (paused) {
+                    try {
+                        pauseLock.wait(); // will cause this Thread to block until
+                        // another thread calls pauseLock.notifyAll()
+                        // Note that calling wait() will
+                        // relinquish the synchronized lock that this
+                        // thread holds on pauseLock so another thread
+                        // can acquire the lock to call notifyAll()
+                        // (link with explanation below this code)
+                    } catch (InterruptedException ex) {
+                        break;
+                    }
+                    if (!running) { // running might have changed since we paused
+                        break;
+                    }
+                }
+            }
             if (counterOfBreakingPoints<breakingPoints.size())
                 nextPoint = breakingPoints.get(counterOfBreakingPoints);
 
@@ -136,24 +161,24 @@ public class CarThread implements Runnable{
                             l.info("Успешное достижение следующего перекрестка");
                             if (lastMove == 1){
                                 forwardCounter+=0.25;
-                                l.info("Корректировка: увеличены веса движения вперед: "+forwardCounter);
+                                l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения вперед: "+forwardCounter);
                             }
                             else if (lastMove == 2){
                                 leftCounter+=0.25;
-                                l.info("Корректировка: увеличены веса движения влево: "+leftCounter);
+                                l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения влево: "+leftCounter);
                             }
                             else if (lastMove == 3){
                                 rightCounter+=0.25;
-                                l.info("Корректировка: увеличены веса движения вправо: "+rightCounter);
+                                l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения вправо: "+rightCounter);
                             }
                             else if (lastMove == 4){
                                 backwardsCounter+=0.25;
-                                l.info("Корректировка: увеличены веса движения назад: "+backwardsCounter);
+                                l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения назад: "+backwardsCounter);
                             }
-                            l.info("Корректировка: увеличены веса движения назад: "+backwardsCounter);
+
                             ph.makeRecord(lastCrossCoorX, lastCrossCoorY, forwardCounter, leftCounter, rightCounter, backwardsCounter, car.getPosY(),car.getPosX());
                             System.out.println("ph:"+lastCrossCoorX+","+lastCrossCoorY+","+forwardCounter+","+leftCounter+","+rightCounter+","+backwardsCounter+","+car.getPosY()+","+car.getPosX());
-                            l.info("Веса движения вперед = "+forwardCounter+", веса движения влево = "+leftCounter+", веса движения вправо = "+rightCounter+", веса движения назад = "+backwardsCounter);
+                            l.info("Сохранение скорректированных весов для предыдущего перекрестка: веса движения вперед = "+forwardCounter+", веса движения влево = "+leftCounter+", веса движения вправо = "+rightCounter+", веса движения назад = "+backwardsCounter);
 
                             forwardCounter = 0.5;
                             leftCounter = 0.5;
@@ -282,7 +307,7 @@ public class CarThread implements Runnable{
                                     makeStep();
                                 }
                                 else {
-                                    end = true;
+                                    running = false;
                                     l.info("Некуда ехать");
                                 }
                             }
@@ -305,7 +330,7 @@ public class CarThread implements Runnable{
                                     makeStep();
                                 }
                                 else {
-                                    end = true;
+                                    running = false;
                                     l.info("Некуда ехать");
                                 }
                             }
@@ -328,7 +353,7 @@ public class CarThread implements Runnable{
                                     makeStep();
                                 }
                                 else {
-                                    end = true;
+                                    running = false;
                                     l.info("Некуда ехать");
                                 }
                             }
@@ -351,7 +376,7 @@ public class CarThread implements Runnable{
                                     makeStep();
                                 }
                                 else {
-                                    end = true;
+                                    running = false;
                                     l.info("Некуда ехать");
                                 }
                             }
@@ -362,11 +387,52 @@ public class CarThread implements Runnable{
                 }
             }
             else {
-                end = true;
+                l.info("Успешное достижение последней точки");
+                if (lastMove == 1){
+                    forwardCounter+=0.25;
+                    l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения вперед: "+forwardCounter);
+                }
+                else if (lastMove == 2){
+                    leftCounter+=0.25;
+                    l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения влево: "+leftCounter);
+                }
+                else if (lastMove == 3){
+                    rightCounter+=0.25;
+                    l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения вправо: "+rightCounter);
+                }
+                else if (lastMove == 4){
+                    backwardsCounter+=0.25;
+                    l.info("Корректировка для весов предыдущего перекрестка: увеличены веса движения назад: "+backwardsCounter);
+                }
+                ph.makeRecord(lastCrossCoorX, lastCrossCoorY, forwardCounter, leftCounter, rightCounter, backwardsCounter, car.getPosY(),car.getPosX());
+                System.out.println("ph:"+lastCrossCoorX+","+lastCrossCoorY+","+forwardCounter+","+leftCounter+","+rightCounter+","+backwardsCounter+","+car.getPosY()+","+car.getPosX());
+                l.info("Сохранение скорректированных весов для предыдущего перекрестка: веса движения вперед = "+forwardCounter+", веса движения влево = "+leftCounter+", веса движения вправо = "+rightCounter+", веса движения назад = "+backwardsCounter);
+
+                //_____________________________________________________-
+                running = false;
+                XMLSaver.saveToFile(ph.record, "algorithm.xml");
             }
         }
-        //saveXML
-        XMLSaver.saveToFile(ph.record, "algorithm.xml");
+
+    }
+    public void stop() {
+        running = false;
+        // you might also want to interrupt() the Thread that is
+        // running this Runnable, too, or perhaps call:
+        resume();
+        // to unblock
+    }
+
+    public void pause() {
+        // you may want to throw an IllegalStateException if !running
+        paused = true;
+    }
+
+    public void resume() {
+        synchronized (pauseLock) {
+            paused = false;
+            pauseLock.notifyAll(); // Unblocks thread
+        }
     }
 
     public void makeStep(){

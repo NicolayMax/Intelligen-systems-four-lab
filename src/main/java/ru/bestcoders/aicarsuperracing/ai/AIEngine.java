@@ -34,6 +34,16 @@ public class AIEngine {
             t[i].start();
         }
     }
+    public void pause(int number){
+        for (int i=0;i<number;i++) {
+            ct[i].pause();
+        }
+    }
+    public void resume(int number){
+        for (int i=0;i<number;i++) {
+            ct[i].resume();
+        }
+    }
     private CarThread[]ct;
     private Thread[]t;
 }

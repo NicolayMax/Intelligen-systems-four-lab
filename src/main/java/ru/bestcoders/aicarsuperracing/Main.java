@@ -25,6 +25,7 @@ public class Main extends Application {
     private LogHandler logHandler;
     private Logger logger = Logger.getLogger("main");
 
+
     // Init resources here
     public void startGame() {
         keySet = new HashSet<>();
@@ -42,6 +43,8 @@ public class Main extends Application {
         logger.info("Application started");
 
         startGame();
+
+        logHandler.window.setGE(game);
 
         primaryStage.setTitle("Ai Super Racing Game 4000");
         primaryStage.setScene(new Scene(game.getPane()));

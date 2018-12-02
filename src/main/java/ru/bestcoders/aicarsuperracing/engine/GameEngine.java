@@ -28,8 +28,11 @@ public class GameEngine {
     private Car car;
     private Car secondCar;
     private Car thirdCar;
+    private boolean paused;
 
     public GameEngine() {
+        paused = false;
+
         root = new Pane();
         levelMap = new LevelMap();
         levelMap.drawTiles(root);
@@ -43,7 +46,8 @@ public class GameEngine {
         // example
         car = new Car(2,0, Car.Direction.DOWN, levelMap);
         secondCar = new Car(20,2, Car.Direction.LEFT, levelMap);
-        thirdCar = new Car(6,10, Car.Direction.UP, levelMap);
+        //thirdCar = new Car(6,10, Car.Direction.UP, levelMap);
+        thirdCar = new Car(3,5, Car.Direction.RIGHT, levelMap);
 
         levelMap.placeCar(car);
         levelMap.placeCar(secondCar);
@@ -61,15 +65,31 @@ public class GameEngine {
         System.out.println("Init game objects");
     }
 
+    public void startLearning(){
+
+        aie.init();
+        aie.play(/*secondCar,*/thirdCar);
+    }
+    public void pauseLearning() {
+        if (!paused){
+            aie.pause(1);       //number - количество обучаеммых машин
+            paused = true;
+        }
+        else{
+            aie.resume(1);
+            paused = false;
+        }
+    }
+
     public void handleInput(HashSet<KeyCode> keySet, HashSet<KeyCode> prevKeys) {
         if (keySet.contains(KeyCode.ESCAPE)) {
             cleanup();
             running = false;
         }
-        if (keySet.contains(KeyCode.ENTER)) {
-            aie.init();
-            aie.play(/*secondCar,*/thirdCar);
-        }
+        //if (keySet.contains(KeyCode.ENTER)) {
+        //   aie.init();
+        //    aie.play(/*secondCar,*/thirdCar);
+        //}
         if (keySet.contains(KeyCode.UP) && !prevKeys.contains(KeyCode.UP)) {
             car.move();
         }
@@ -109,4 +129,6 @@ public class GameEngine {
             gameObjects.remove(object);
         }
     }
+
+
 }

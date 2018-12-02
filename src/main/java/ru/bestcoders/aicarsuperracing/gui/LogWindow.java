@@ -1,5 +1,7 @@
 package ru.bestcoders.aicarsuperracing.gui;
 
+import ru.bestcoders.aicarsuperracing.engine.GameEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,13 +14,18 @@ public class LogWindow extends JFrame {
     private JButton stopEdu;
     private JButton execute;
     private Logger logger;
+    private GameEngine ge;
+
+    public void setGE(GameEngine ge){
+        this.ge = ge;
+    }
 
     public LogWindow() {
         logger = Logger.getLogger("main");
         textArea = new JTextArea();
         buttonPanel = new JPanel();
         startEdu = new JButton("Начать обучение");
-        stopEdu = new JButton("Приостановить обучение");
+        stopEdu = new JButton("Приостановить/возобновить обучение");
         execute = new JButton("Выполнить");
         textArea.setEditable(false);
         setTitle("Log");
@@ -56,11 +63,12 @@ public class LogWindow extends JFrame {
     }
 
     private void onStopEduPress() {
-        logger.info("Обучение приостановлено");
+        ge.pauseLearning();
     }
 
     private void onStartEduPress() {
         logger.info("Обучение запущено");
+        ge.startLearning();
     }
 
     private void onExecutePress() {

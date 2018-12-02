@@ -1,5 +1,6 @@
 package ru.bestcoders.aicarsuperracing.utils;
 
+import ru.bestcoders.aicarsuperracing.engine.GameEngine;
 import ru.bestcoders.aicarsuperracing.gui.LogWindow;
 
 import java.util.logging.Handler;
@@ -9,8 +10,10 @@ import java.util.logging.LogRecord;
 
 public class LogHandler extends Handler {
 
-    private LogWindow window;
+    public LogWindow window;
     private static LogHandler handler;
+
+    //public GameEngine ge;
 
     private LogHandler() {
         LogManager manager = LogManager.getLogManager();
@@ -19,6 +22,7 @@ public class LogHandler extends Handler {
         setLevel(level != null ? Level.parse(level) : Level.INFO);
         if (window == null)
             window = new LogWindow();
+            //window.ge = ge;
     }
 
     public static synchronized LogHandler getInstance() {
