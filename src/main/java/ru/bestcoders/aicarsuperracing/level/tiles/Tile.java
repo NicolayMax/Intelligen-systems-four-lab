@@ -29,9 +29,11 @@ public class Tile extends Pane {
     private boolean busyUR = false;
     private boolean busyBL = false;
     private boolean road;
+    private TileType type;
 
     public Tile (TileType type,int x, int y) {
         block = new ImageView(texture);
+        this.type = type;
 
         switch (type) {
             case CROSS:
@@ -69,18 +71,22 @@ public class Tile extends Pane {
             case ENDRIGHT:
                 block.setViewport(new Rectangle2D(64, 64 * 3, 64, 64));
                 road = true;
+                holdAll();
                 break;
             case ENDLEFT:
                 block.setViewport(new Rectangle2D(64 * 3, 64, 64, 64));
                 road = true;
+                holdAll();
                 break;
             case ENDTOP:
                 block.setViewport(new Rectangle2D(64 * 2, 64 * 3, 64, 64));
                 road = true;
+                holdAll();
                 break;
             case ENDBOTTOM:
                 block.setViewport(new Rectangle2D(64 * 3, 64 * 2, 64, 64));
                 road = true;
+                holdAll();
                 break;
             case CHECKPOINT:
                 block = new ImageView(new Image(getClass().getResourceAsStream("/textures/checkpoint.png")));
@@ -123,8 +129,13 @@ public class Tile extends Pane {
     }
 
     public void releaseAll() {
-        busyBL = false;
-        busyUR = false;
+        if (type != Tile.TileType.ENDTOP &&
+                type != Tile.TileType.ENDBOTTOM &&
+                type != Tile.TileType.ENDLEFT &&
+                type != Tile.TileType.ENDRIGHT) {
+            busyBL = false;
+            busyUR = false;
+        }
     }
 
     public void changeDirection(Car.Direction direction) throws Exception {
