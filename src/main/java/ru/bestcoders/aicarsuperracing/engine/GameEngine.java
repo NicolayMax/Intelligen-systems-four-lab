@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import ru.bestcoders.aicarsuperracing.ai.AIEngine;
+import ru.bestcoders.aicarsuperracing.ai.AIPlay;
 import ru.bestcoders.aicarsuperracing.entities.Car;
 import ru.bestcoders.aicarsuperracing.entities.Construction;
 import ru.bestcoders.aicarsuperracing.entities.GameObject;
@@ -24,6 +25,7 @@ public class GameEngine {
     private LevelMap levelMap;
     private HashSet<KeyCode> prevKeys = new HashSet<>();
     private AIEngine aie;
+    private AIPlay aip;
 
     private Car car;
     private Car secondCar;
@@ -50,14 +52,15 @@ public class GameEngine {
         thirdCar = new Car(3,5, Car.Direction.RIGHT, levelMap);
 
         levelMap.placeCar(car);
-        levelMap.placeCar(secondCar);
+        //levelMap.placeCar(secondCar);
         levelMap.placeCar(thirdCar);
         root.getChildren().add(car);
-        root.getChildren().add(secondCar);
+        //root.getChildren().add(secondCar);
         root.getChildren().add(thirdCar);
 
         aie = new AIEngine(levelMap);
         aie.play();
+        //aip = new AIPlay(levelMap);
     }
 
     public void init() {
@@ -66,7 +69,6 @@ public class GameEngine {
     }
 
     public void startLearning(){
-
         aie.init();
         aie.play(/*secondCar,*/thirdCar);
     }
@@ -76,9 +78,22 @@ public class GameEngine {
             paused = true;
         }
         else{
-            aie.resume(1);
+            aie.resume(1);  //number - количество обучаеммых машин
             paused = false;
         }
+    }
+    public void predictedRun(){                //работает только для одной машины,
+        //aie.stop(1);        //number - количество обучаеммых машин
+
+        /* код который сбрасывает levelmap и расставляет машинки заново
+        ...
+        ...
+        ...
+        */
+
+        aip = new AIPlay(levelMap);
+        aip.init();
+        aip.play(/*secondCar,*/thirdCar);
     }
 
     public void handleInput(HashSet<KeyCode> keySet, HashSet<KeyCode> prevKeys) {

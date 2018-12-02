@@ -410,6 +410,7 @@ public class CarThread implements Runnable{
 
                 //_____________________________________________________-
                 running = false;
+                //XMLSaver.saveToFile(ph.record, "algorithm"+Thread.currentThread().getName()+".xml");
                 XMLSaver.saveToFile(ph.record, "algorithm.xml");
             }
         }

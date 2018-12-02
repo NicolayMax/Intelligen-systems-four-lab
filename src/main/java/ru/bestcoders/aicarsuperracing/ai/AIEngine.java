@@ -44,6 +44,11 @@ public class AIEngine {
             ct[i].resume();
         }
     }
+    public void stop(int number){
+        for (int i=0;i<number;i++) {
+            ct[i].stop();
+        }
+    }
     private CarThread[]ct;
     private Thread[]t;
 }

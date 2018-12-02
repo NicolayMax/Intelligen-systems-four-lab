@@ -26,7 +26,7 @@ public class LogWindow extends JFrame {
         buttonPanel = new JPanel();
         startEdu = new JButton("Начать обучение");
         stopEdu = new JButton("Приостановить/возобновить обучение");
-        execute = new JButton("Выполнить");
+        execute = new JButton("Запуск обуч.модели");
         textArea.setEditable(false);
         setTitle("Log");
         setSize(600, 300);
@@ -73,5 +73,6 @@ public class LogWindow extends JFrame {
 
     private void onExecutePress() {
         logger.info("Выполнение запущено");
+        ge.predictedRun();
     }
 }
