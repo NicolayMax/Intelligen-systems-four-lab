@@ -27,8 +27,6 @@ public class GameEngine {
     private AIEngine aie;
     private AIPlay aip;
 
-    private Car car;
-    private Car secondCar;
     private Car thirdCar;
     private boolean paused;
 
@@ -45,16 +43,9 @@ public class GameEngine {
         root.setPrefSize(WIDTH, HEIGHT);
         gameObjects = new ArrayList<>();
 
-        // example
-        car = new Car(2,0, Car.Direction.DOWN, levelMap);
-        secondCar = new Car(20,2, Car.Direction.LEFT, levelMap);
-        //thirdCar = new Car(6,10, Car.Direction.UP, levelMap);
         thirdCar = new Car(3,5, Car.Direction.RIGHT, levelMap);
-
-        levelMap.placeCar(car);
         //levelMap.placeCar(secondCar);
         levelMap.placeCar(thirdCar);
-        root.getChildren().add(car);
         //root.getChildren().add(secondCar);
         root.getChildren().add(thirdCar);
 
@@ -90,6 +81,9 @@ public class GameEngine {
         ...
         ...
         */
+        thirdCar.setPosX(3);
+        thirdCar.setPosY(5);
+        thirdCar.setDirection(Car.Direction.RIGHT);
 
         aip = new AIPlay(levelMap);
         aip.init();
@@ -105,15 +99,6 @@ public class GameEngine {
         //   aie.init();
         //    aie.play(/*secondCar,*/thirdCar);
         //}
-        if (keySet.contains(KeyCode.UP) && !prevKeys.contains(KeyCode.UP)) {
-            car.move();
-        }
-        if (keySet.contains(KeyCode.LEFT) && !prevKeys.contains(KeyCode.LEFT)) {
-            car.rotateLeft();
-        }
-        if (keySet.contains(KeyCode.RIGHT) && !prevKeys.contains(KeyCode.RIGHT)) {
-            car.rotateRight();
-        }
     }
 
     public void cleanup() {

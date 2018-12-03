@@ -58,6 +58,7 @@ public class Car extends GameObject {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+        recalculateRotation();
     }
 
     public void move() {

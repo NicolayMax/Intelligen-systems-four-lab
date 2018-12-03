@@ -59,6 +59,7 @@ public class LogWindow extends JFrame {
 
     public void showInfo(String data) {
         textArea.append(data);
+        textArea.setCaretPosition(textArea.getDocument().getLength());
         this.validate();
     }
 
